@@ -1,0 +1,16 @@
+{
+	"Cut": {
+		"http://101companies.org/resources/contributions/haskellFlattened/Cut.hs/pattern/cut": "some content of the cut function",
+		"http://101companies.org/resources/contributions/haskellFlattened/Main.hs/pattern/cutTest": "some content of the cut test"
+
+	},
+	"Total": {
+		"http://101companies.org/resources/contributions/haskellFlattened/Total.hs/pattern/total": "some content of the total function",
+		"http://101companies.org/resources/contributions/haskellFlattened/Main.hs/pattern/totalTest": "some content of the total test"
+
+	},
+	"Mentoring": {
+		"http://101companies.org/resources/contributions/haskellFlattened/Ranking.hs/pattern/mentoring": "some content of the mentoring function",
+		"http://101companies.org/resources/contributions/haskellFlattened/Main.hs/pattern/mentoringTest": "some content of the mentoring test"
+	}
+}
