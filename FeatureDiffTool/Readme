@@ -1,0 +1,19 @@
+1. Dependencies for Building & Running:
+
+Java Platform (JDK) , v6+
+
+2. Building 
+
+$ make clean
+$ make
+
+3. Usage
+
+java -jar FeatureDiff.jar <options> <input1 .json file> <input2 .json file> <output .json file>
+Options:
+        -oc  Compute the diff between original and cloned variants.
+        -cc  Compute the diff between two commits of the same variant.
+
+
+
+
