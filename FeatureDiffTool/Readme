@@ -9,11 +9,11 @@ $ make
 
 3. Usage
 
-java -jar FeatureDiff.jar <options> <input1 .json file> <input2 .json file> <output .json file>
+Usage: java -jar FeatureDiff.jar <options> <input1 .json file> <input2 .json file> [input3 .json file] <output.json file>
 Options:
         -oc  Compute the diff between original and cloned variants.
         -cc  Compute the diff between two commits of the same variant.
-
+        -occ Compute the diff between two commits, then intersect it with a clone. Argument files: clone.json, originV1.json, originV2.json, output.json
 
 
 

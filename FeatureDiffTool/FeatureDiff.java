@@ -11,11 +11,13 @@ import java.util.Iterator;
 import net.sf.json.*;
 
 public class FeatureDiff {
-	private static String help = "Usage: java -jar FeatureDiff.jar <options> <input1 .json file> <input2 .json file> <output .json file>\n" +
+	private static String help = "Usage: java -jar FeatureDiff.jar <options> <input1 .json file> <input2 .json file> [input3 .json file] <output .json file>\n" +
 			"Options:\n" +
 			"\t-oc  Compute the diff between original and cloned variants.\n" +
-			"\t-cc  Compute the diff between two commits of the same variant.\n";
-	private static String optionCodes[] = {"-oc","-cc"};
+			"\t-cc  Compute the diff between two commits of the same variant.\n" +
+			"\t-occ Compute the diff between two commits, then intersect it with a clone. Argument files: clone.json, originV1.json, originV2.json, output.json\n";
+	private static String optionCodes[] = {"-oc","-cc","-occ"};
+	private static int numOfArgs[] = {3,3,4};
 	public static String diffForOriginClone(String original, String clone){
 		JSONObject originalObj,cloneObj,diffObj;
 		diffObj = new JSONObject();
@@ -33,7 +35,7 @@ public class FeatureDiff {
 				for(int i = 0; i < originalObjArray.length; i++){
 					for(int j = 0; j < cloneObjArray.length;j++){
 						if(originalObjArray[i].toString().equals(cloneObjArray[j].toString())){
-							outputArray.put(i+1);
+							outputArray.put(originalObjArray[i].toString());
 							break;
 						}
 					}
@@ -101,7 +103,7 @@ public class FeatureDiff {
 		
 	}
 	public static void main(String args[]){
-		if(args.length != 4 || !checkOptionCode(args[0])){
+		if(!checkArgs(args)){
 			System.out.println("Error: Incorrect usage.");
 			System.out.println(help);
 			return;
@@ -109,8 +111,9 @@ public class FeatureDiff {
 		String option = args[0];
 		File input1 = new File(args[1]);
 		File input2 = new File(args[2]);
-		File output = new File(args[3]);
-		String input1String,input2String;		
+		File input3 = new File(args[3]);
+		File output = (args.length == 5)?(new File(args[4])):(new File(args[3]));
+		String input1String,input2String,input3String;		
 		BufferedWriter out = null;
 		try {
 			input1String = readWholeTextFile(input1);
@@ -121,6 +124,9 @@ public class FeatureDiff {
 		    }
 		    else if(option.equals("-cc")){
 		    	diff = diffForTwoCommits(input1String, input2String);
+		    }else if(option.equals("-occ")){
+		    	input3String = readWholeTextFile(input3);
+		    	diff = diffForOriginClone(input1String, diffForTwoCommits(input2String, input3String));
 		    }else{
 		    	diff = "";
 		    }
@@ -137,11 +143,12 @@ public class FeatureDiff {
 		}
 				
 	}
-	private static boolean checkOptionCode(String s){
+	private static boolean checkArgs(String args[]){
 		for(int i = 0; i < optionCodes.length;i++){
-			if(optionCodes[i].equals(s))
+			if(args.length == (numOfArgs[i] + 1) && optionCodes[i].equals(args[0]))
 				return true;
 		}
-		return false;
+		return false;		
 	}
+	
 }
